@@ -19,7 +19,7 @@ class CalculatorViewController: UIViewController {
         
         let collection = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collection.backgroundColor = .black
-        collection.register(CalculatorHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: CalculatorHeaderCell.id)
+        collection.register(CalculatorHeaderCell.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CalculatorHeaderCell.id)
         collection.register(ButtonCollectionViewCell.self, forCellWithReuseIdentifier: ButtonCollectionViewCell.id)
         return collection
         
@@ -72,6 +72,7 @@ extension CalculatorViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CalculatorHeaderCell.id, for: indexPath) as? CalculatorHeaderCell else {
+            print("buraya giriyor")
             fatalError("Failed to dequeue CalculatorHeaderCell in CalculatorViewController")
         }
         header.configure(currentCalculatorText: self.viewModel.calculatorHeaderLabel)
@@ -101,6 +102,7 @@ extension CalculatorViewController: UICollectionViewDataSource, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ButtonCollectionViewCell.id, for: indexPath) as? ButtonCollectionViewCell else {
+            print("button collection view cell error")
             fatalError("Unable to dequeue ButtonCell in Calculator Controller.")
             
         }

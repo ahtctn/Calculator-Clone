@@ -9,7 +9,7 @@ import UIKit
 
 class CalculatorHeaderCell: UICollectionReusableView {
     //MARK: HEADER ID
-    static let id: String = "HeaderCell"
+    static let id: String = "CalculatorHeaderCell"
     
     //MARK: UI COMPONENTS
     private let label: UILabel = {
