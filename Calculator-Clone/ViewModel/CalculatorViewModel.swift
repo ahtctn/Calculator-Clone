@@ -53,9 +53,9 @@ extension CalculatorViewModel {
         case .allClear:
             self.allClearSelected()
         case .plusMinus:
-            fatalError()
+            self.didSelectPlusMinusButton()
         case .percentage:
-            fatalError()
+            self.didSelectPercentageButton()
         case .divide:
             self.didSelectOperation(with: .divide)
         case .multiply:
@@ -126,6 +126,13 @@ extension CalculatorViewModel {
             self.operation = nil
             self.firstNumber = result
             self.currentNumber = .firstNumber
+        } else if let prevOperation = self.previousOperation,
+                  let firstNumber = self.firstNumber,
+                  let previousNumber = self.previousNumber {
+            //This will update the calculated based on previously selected number and arithmetic operation
+            let result = self.getOperationResult(prevOperation, firstNumber, previousNumber)
+            self.firstNumber = result
+            
         }
     }
     
@@ -137,7 +144,7 @@ extension CalculatorViewModel {
             if let prevOperation = self.operation,
                let firstNumber = self.firstNumber,
                let secondNumber = self.secondNumber {
-                let result = self.getOperationResult(operation, firstNumber, secondNumber)
+                let result = self.getOperationResult(prevOperation, firstNumber, secondNumber)
                 self.secondNumber = nil
                 self.firstNumber = result
                 self.currentNumber = . secondNumber
@@ -159,6 +166,34 @@ extension CalculatorViewModel {
             return firstNumber - secondNumber
         case .add:
             return firstNumber + secondNumber
+        }
+    }
+}
+
+//MARK: ACTION BUTTONS
+extension CalculatorViewModel {
+    
+    private func didSelectPlusMinusButton() {
+        if self.currentNumber == .firstNumber, var number = self.firstNumber {
+            number.negate()
+            self.firstNumber = number
+            self.previousNumber = number
+        } else if self.currentNumber == .secondNumber, var number = self.secondNumber {
+            number.negate()
+            self.secondNumber = number
+            self.previousNumber = number
+        }
+    }
+    
+    private func didSelectPercentageButton() {
+        if self.currentNumber == .firstNumber, var number = self.firstNumber {
+            number /= 100
+            self.firstNumber = number
+            self.previousNumber = number
+        } else if self.currentNumber == .secondNumber, var number = self.secondNumber {
+            number /= 100
+            self.secondNumber = number
+            self.previousNumber = number
         }
     }
 }
