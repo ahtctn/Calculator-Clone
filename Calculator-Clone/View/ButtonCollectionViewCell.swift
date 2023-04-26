@@ -37,6 +37,11 @@ class ButtonCollectionViewCell: UICollectionViewCell {
         self.setupUI()
     }
     
+    func setOperationSelected() {
+        self.titleLabel.textColor = .orange
+        self.backgroundColor = .white
+    }
+    
     //MARK: UI SETUP
     private func setupUI() {
         self.addSubview(titleLabel)
